@@ -1,4 +1,4 @@
-# Busca-Binaria
+# Busca Binaria
 
 ## Para que serve
 - A Busca Binária é um algoritmo eficiente para encontrar um elemento em um array ordenado. Ela trabalha dividindo o intervalo de busca pela metade a cada passo, comparando o elemento do meio com o elemento buscado. Se o elemento buscado não estiver na posição central, a busca continua na metade onde o elemento poderia estar.
