@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 // Função para realizar a ordenação por seleção em um array
 void ordenacao_por_selecao(int arr[], int n) {
@@ -34,17 +35,29 @@ void printArray(int arr[], int tamanho) {
 }
 
 int main() {
-    // Define e inicializa o array
-    int arr[] = {64, 25, 12, 22, 11};
+    // Define e inicializa um array maior
+    int arr[] = {64, 25, 12, 22, 11, 90, 55, 73, 30, 2, 18, 100, 45, 29, 85, 60, 44, 77, 33, 66, 88, 10, 95, 81, 5, 99};
     // Calcula o tamanho do array dividindo o tamanho total em bytes pelo tamanho de um elemento
     int tamanho = sizeof(arr) / sizeof(arr[0]);
+
+    // Captura o tempo antes da execução da ordenação
+    clock_t inicio = clock();
 
     // Chama a função de ordenação por seleção
     ordenacao_por_selecao(arr, tamanho);
 
+    // Captura o tempo após a execução da ordenação
+    clock_t fim = clock();
+
+    // Calcula o tempo de execução em segundos
+    double tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
+
     // Imprime o array ordenado
     printf("Array ordenado: \n");
     printArray(arr, tamanho);
+
+    // Imprime o tempo de execução
+    printf("Tempo de execução: %f segundos\n", tempo_execucao);
 
     return 0;  // Retorna 0 para indicar que o programa terminou com sucesso
 }
