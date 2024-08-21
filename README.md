@@ -15,7 +15,6 @@
 - Ordenação por Seleção: Ordena um array de inteiros.
 
 ## Complexidade dos Algoritmos
-- Busca Binaria
  - Melhor Caso: 𝑂(1)
  - Pior Caso: 𝑂(log 𝑛)
  - Complexidade Média: 𝑂(log 𝑛)
