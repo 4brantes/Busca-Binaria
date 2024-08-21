@@ -1,8 +1,32 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
-// Função para realizar a ordenação por seleção em um array
-void ordenacao_por_selecao(int arr[], int n) {
+// Definição da estrutura do TAD OrdenacaoSelecao
+typedef struct {
+    int *array;
+    int tamanho;
+} OrdenacaoSelecao;
+
+// Função que cria o TAD OrdenacaoSelecao
+OrdenacaoSelecao* criar_ordenacao_selecao(int arr[], int tamanho) {
+    OrdenacaoSelecao *ordenacao = (OrdenacaoSelecao*)malloc(sizeof(OrdenacaoSelecao));
+    if (ordenacao != NULL) {
+        ordenacao->tamanho = tamanho;
+        ordenacao->array = (int*)malloc(tamanho * sizeof(int));
+        if (ordenacao->array != NULL) {
+            for (int i = 0; i < tamanho; i++) {
+                ordenacao->array[i] = arr[i];
+            }
+        }
+    }
+    return ordenacao;
+}
+
+// Função para realizar a ordenação por seleção em um TAD OrdenacaoSelecao
+void ordenacao_por_selecao(OrdenacaoSelecao *ordenacao) {
+    int n = ordenacao->tamanho;
+    int *arr = ordenacao->array;
     int i, j, min_idx;
 
     // Loop que percorre todo o array
@@ -25,8 +49,11 @@ void ordenacao_por_selecao(int arr[], int n) {
     }
 }
 
-// Função para imprimir o array
-void printArray(int arr[], int tamanho) {
+// Função para imprimir o array armazenado no TAD OrdenacaoSelecao
+void print_array(OrdenacaoSelecao *ordenacao) {
+    int *arr = ordenacao->array;
+    int tamanho = ordenacao->tamanho;
+    
     // Loop para percorrer e imprimir todos os elementos do array
     for (int i = 0; i < tamanho; i++) {
         printf("%d ", arr[i]);  // Imprime o elemento atual seguido de um espaço
@@ -34,26 +61,45 @@ void printArray(int arr[], int tamanho) {
     printf("\n");  // Imprime uma nova linha após todos os elementos terem sido impressos
 }
 
+// Função que libera a memória alocada para o TAD OrdenacaoSelecao
+void destruir_ordenacao_selecao(OrdenacaoSelecao *ordenacao) {
+    if (ordenacao != NULL) {
+        free(ordenacao->array);
+        free(ordenacao);
+    }
+}
+
+// Função principal para demonstrar o uso do TAD
 int main() {
     // Define e inicializa um array maior
     int arr[] = {64, 25, 12, 22, 11, 90, 55, 73, 30, 2, 18, 100, 45, 29, 85, 60, 44, 77, 33, 66, 88, 10, 95, 81, 5, 99};
     int tamanho = sizeof(arr) / sizeof(arr[0]);
 
+    // Cria o TAD OrdenacaoSelecao
+    OrdenacaoSelecao *ordenacao = criar_ordenacao_selecao(arr, tamanho);
+    if (ordenacao == NULL) {
+        printf("Falha ao criar o TAD OrdenacaoSelecao\n");
+        return -1;
+    }
+
     int num_execucoes = 10000;  // Número de vezes que o algoritmo será executado
     clock_t inicio = clock();
 
-    // Executa a ordenação por seleção várias vezes
+    // Executa a ordenação por seleção várias vezes usando o TAD
     for (int i = 0; i < num_execucoes; i++) {
-        ordenacao_por_selecao(arr, tamanho);
+        ordenacao_por_selecao(ordenacao);
     }
 
     clock_t fim = clock();
     double tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC / num_execucoes;
 
     printf("Array ordenado: \n");
-    printArray(arr, tamanho);
+    print_array(ordenacao);
 
     printf("Tempo médio de execução: %f segundos\n", tempo_execucao);
+
+    // Libera a memória alocada para o TAD
+    destruir_ordenacao_selecao(ordenacao);
 
     return 0;
 }
